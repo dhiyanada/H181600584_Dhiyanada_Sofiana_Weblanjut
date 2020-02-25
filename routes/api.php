@@ -22,10 +22,24 @@ Route::delete('artikel/{id}','ArtikelAPIController@destroy');
 Route::get('artikel/{id}','ArtikelAPIController@show');
 */
 
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', 'AuthAPIController@login');
+    Route::post('logout', 'AuthAPIController@logout');
+    Route::post('refresh', 'AuthAPIController@refresh');
+    Route::post('me', 'AuthAPIController@me');
+
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+//Jangan Ubah Isi dari Route/api.php
 
 //Soal1
 //Tampilkan kategori berita dengan id=40 dan dibuat oleh orang dengan email ntarihoran@siregar.org
